@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import formidable from "formidable";
 import fs from "fs";
-import { parsePdf } from "@/lib/pdf";
+import { parsePdf } from "../../lib/pdf";
+
 
 export const config = { api: { bodyParser: false } };
 

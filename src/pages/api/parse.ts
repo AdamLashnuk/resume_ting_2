@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { parsePdf } from "@/lib/pdf";
+import { parsePdf } from "../../lib/pdf";
+
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
