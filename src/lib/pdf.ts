@@ -1,5 +1,7 @@
 import puppeteer from "puppeteer";
+import pdf from "pdf-parse";
 
+// Convert HTML to PDF
 export async function htmlToPdf(html: string): Promise<Buffer> {
   const browser = await puppeteer.launch({
     headless: true,
@@ -16,4 +18,10 @@ export async function htmlToPdf(html: string): Promise<Buffer> {
 
   await browser.close();
   return pdfBuffer;
+}
+
+// Parse uploaded PDF into text
+export async function parsePdf(buffer: Buffer): Promise<string> {
+  const data = await pdf(buffer);
+  return data.text;
 }
