@@ -1,21 +1,20 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import formidable from "formidable";
-import fs from "fs";
-import { parsePdf } from "../../lib/pdf";
 
-
-export const config = { api: { bodyParser: false } };
+export const config = {
+  api: { bodyParser: { sizeLimit: "10mb" } }
+};
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const form = new formidable.IncomingForm();
+  try {
+    if (req.method !== "POST") return res.status(405).send("Method Not Allowed");
 
-  form.parse(req, async (err, fields, files) => {
-    if (err) return res.status(500).json({ error: "Upload error" });
+    if (!req.body || !req.body.file) return res.status(400).send("No file uploaded");
 
-    const file = files.file as formidable.File;
-    const buffer = fs.readFileSync(file.filepath);
-    const parsedText = await parsePdf(buffer);
+    // Simply return the file for parsing later
+    res.status(200).json({ file: req.body.file });
 
-    res.json({ text: parsedText });
-  });
+  } catch (err: any) {
+    console.error("Upload Error:", err);
+    res.status(500).send("Error uploading file: " + err.message);
+  }
 }
