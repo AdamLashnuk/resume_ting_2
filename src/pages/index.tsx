@@ -153,7 +153,7 @@ codex/update-website-design-to-match-example-20qw18
                 <FileText className="h-5 w-5" />
               </div>
               <div className="leading-tight">
-                <p className="text-[0.65rem] uppercase tracking-[0.35em] text-indigo-200">ResumeForge</p>
+                <p className="text-[0.65rem] uppercase tracking-[0.35em] text-indigo-200">EdgeWorks</p>
                 <p className="text-base font-semibold text-white">Creator Studio</p>
               </div>
             </div>
