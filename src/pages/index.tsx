@@ -200,7 +200,7 @@ export default function Home() {
   const handleAnchorNav = useCallback((event: MouseEvent<HTMLAnchorElement>, href: string) => {
     event.preventDefault();
     if (typeof window === "undefined") return;
-  
+
     const id = href.replace("#", "");
     const target = document.getElementById(id);
     if (target) {
@@ -209,7 +209,6 @@ export default function Home() {
     }
     setMenuOpen(false);
   }, []);
-
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -239,8 +238,7 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen overflow-hidden text-slate-100">
-      {/* The rest of your JSX stays exactly the same */}
+      {/* ... your full UI stays exactly the same here ... */}
     </main>
   );
 }
-
