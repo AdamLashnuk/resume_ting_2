@@ -139,6 +139,70 @@ function Reveal({
   );
 }
 
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  FileText,
+  LayoutDashboard,
+  Menu as Menu2,
+  Plus as Plus2,
+  Sparkle as Sparkle2,
+  Upload as Upload2,
+  UserCheck,
+  Wand2 as Wand22,
+  Zap,
+  Bookmark as Bookmark2,
+} from "lucide-react";
+import { useEffect as useEffect2, useRef as useRef2, useState as useState2, type CSSProperties as CSSProperties2, type ElementType as ElementType2, type HTMLAttributes as HTMLAttributes2, type ReactNode as ReactNode2 } from "react";
+
+import ResumeForm from "../components/ResumeForm";
+import UploadForm from "../components/UploadForm";
+import TemplatePreview from "../components/TemplatePreview";
+
+const stats = [
+  { label: "Total Resumes", value: "1", caption: "Versions crafted", icon: FileText },
+  { label: "Profile Status", value: "Complete", caption: "All sections synced", icon: UserCheck, badgeColor: "text-emerald-600" },
+  { label: "Last Updated", value: "Sep 28, 2025", caption: "Keep momentum strong", icon: Zap },
+];
+
+const navLinks2 = [
+  { label: "Overview", href: "#hero" },
+  { label: "Workspace", href: "#workspace" },
+  { label: "Highlights", href: "#features" },
+];
+
+const features = [
+  { title: "AI drafting engine", description: "Auto-generate tailored bullet points with tone-aware prompts and instant rewrites.", icon: Wand22 },
+  { title: "Multi-resume control", description: "Track every version, compare revisions, and export when the timing is right.", icon: LayoutDashboard },
+  { title: "Smart parsing", description: "Upload any PDF and recover perfectly formatted content ready for reuse.", icon: Sparkle2 },
+];
+
+const timeline = [
+  { title: "Upload & parse", description: "Drag in a PDF and we extract clean sections with zero formatting headaches." },
+  { title: "Remix with AI", description: "Adjust tone, expand wins, and surface the exact skills recruiters want to see." },
+  { title: "Deliver anywhere", description: "Ship pixel-perfect resumes, cover letters, and share-ready links in seconds." },
+];
+
+const easing: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.9, ease: easing } },
+};
+
+const stagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12, delayChildren: 0.2 } },
+};
+
+const cardStagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.14 } },
+};
+
+const cardFade = {
+  hidden: { opacity: 0, y: 28, scale: 0.98 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.8, ease: easing } },
+};
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [parsedText, setParsedText] = useState<string | null>(null);
@@ -168,6 +232,19 @@ export default function Home() {
     window.addEventListener("resize", closeOnResize);
     return () => window.removeEventListener("resize", closeOnResize);
   }, []);
+
+  const parsedHtml = parsedText
+    ? parsedText
+        .split(/\n{2,}/)
+        .map((paragraph) =>
+          `<p>${paragraph
+            .split(/\n/)
+            .map((line) => line.trim())
+            .filter(Boolean)
+            .join("<br />")}</p>`
+        )
+        .join("")
+    : null;
 
   return (
     <main className="relative min-h-screen overflow-hidden text-slate-100">
@@ -335,7 +412,6 @@ export default function Home() {
             </Reveal>
           </div>
         </Reveal>
-
         <Reveal as="section" id="upload" className="section-shell centered-section">
           <Reveal className="section-heading" delay={60}>
             <p className="section-kicker">Upload</p>
