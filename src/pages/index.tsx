@@ -140,18 +140,6 @@ function Reveal({
 }
 
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  FileText,
-  LayoutDashboard,
-  Menu as Menu2,
-  Plus as Plus2,
-  Sparkle as Sparkle2,
-  Upload as Upload2,
-  UserCheck,
-  Wand2 as Wand22,
-  Zap,
-  Bookmark as Bookmark2,
-} from "lucide-react";
 import { useEffect as useEffect2, useRef as useRef2, useState as useState2, type CSSProperties as CSSProperties2, type ElementType as ElementType2, type HTMLAttributes as HTMLAttributes2, type ReactNode as ReactNode2 } from "react";
 
 import ResumeForm from "../components/ResumeForm";
