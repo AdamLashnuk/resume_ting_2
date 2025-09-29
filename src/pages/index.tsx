@@ -24,6 +24,7 @@ import {
   type ElementType,
   type HTMLAttributes,
   type ReactNode,
+  type MouseEvent;
 } from "react";
 
 import ResumeForm from "../components/ResumeForm";
@@ -199,7 +200,7 @@ export default function Home() {
   const handleAnchorNav = useCallback((event: MouseEvent<HTMLAnchorElement>, href: string) => {
     event.preventDefault();
     if (typeof window === "undefined") return;
-
+  
     const id = href.replace("#", "");
     const target = document.getElementById(id);
     if (target) {
@@ -208,6 +209,7 @@ export default function Home() {
     }
     setMenuOpen(false);
   }, []);
+
 
   useEffect(() => {
     if (typeof window === "undefined") return;
