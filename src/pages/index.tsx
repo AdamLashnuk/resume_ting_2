@@ -1,6 +1,7 @@
 'use client';
 
 import Link from "next/link";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   Bookmark,
   FileText,
@@ -10,18 +11,25 @@ import {
   Sparkle,
   Upload,
   Wand2,
+  LayoutDashboard,
+  UserCheck,
+  Zap,
 } from "lucide-react";
-import type {
-  CSSProperties,
-  ElementType,
-  HTMLAttributes,
-  MouseEvent,
-  ReactNode,
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ElementType,
+  type HTMLAttributes,
+  type ReactNode,
 } from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
 
 import ResumeForm from "../components/ResumeForm";
 import UploadForm from "../components/UploadForm";
+import TemplatePreview from "../components/TemplatePreview";
+
 
 const navLinks = [
   { label: "Create", href: "#create" },
@@ -142,9 +150,7 @@ function Reveal({
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect as useEffect2, useRef as useRef2, useState as useState2, type CSSProperties as CSSProperties2, type ElementType as ElementType2, type HTMLAttributes as HTMLAttributes2, type ReactNode as ReactNode2 } from "react";
 
-import ResumeForm from "../components/ResumeForm";
-import UploadForm from "../components/UploadForm";
-import TemplatePreview from "../components/TemplatePreview";
+
 
 const stats = [
   { label: "Total Resumes", value: "1", caption: "Versions crafted", icon: FileText },
