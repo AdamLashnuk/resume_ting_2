@@ -5,28 +5,50 @@ export default function UploadForm({ onParsed }: { onParsed: (text: string) => v
   const [loading, setLoading] = useState(false);
 
   async function handleUpload() {
-    if (!file) return;
+    if (!file || loading) return;
     setLoading(true);
-    const form = new FormData();
-    form.append("file", file);
-    const res = await fetch("/api/upload", { method: "POST", body: form });
-    const json = await res.json();
-    setLoading(false);
-    onParsed(json.text);
+    try {
+      const form = new FormData();
+      form.append("file", file);
+      const res = await fetch("/api/upload", { method: "POST", body: form });
+      if (!res.ok) {
+        throw new Error("Upload failed");
+      }
+      const json = await res.json();
+      onParsed(json.text);
+    } catch (error) {
+      console.error(error);
+      alert("We couldn't parse that PDF. Please try another file.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
-    <div className="flex flex-col space-y-4">
-      <input
-        type="file"
-        accept="application/pdf"
-        onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-        className="file-input file-input-bordered w-full"
-      />
-<button className="px-4 py-2 bg-gradient-to-r from-pink-500 to-orange-500 text-white rounded-lg shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300">
-  Click Me
-</button>
-
+    <div className="space-y-5">
+      <label className="upload-area">
+        <input
+          type="file"
+          accept="application/pdf"
+          onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+          className="hidden"
+        />
+        <div className="upload-glow" />
+        <div className="space-y-2 text-center">
+          <p className="upload-title">Drop your PDF here</p>
+          <p className="upload-copy">
+            {file ? file.name : "or click to browse files"}
+          </p>
+        </div>
+      </label>
+      <button
+        type="button"
+        onClick={handleUpload}
+        disabled={!file || loading}
+        className="btn-primary w-full"
+      >
+        {loading ? "Parsing resume..." : "Parse uploaded resume"}
+      </button>
     </div>
   );
 }
