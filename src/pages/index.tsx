@@ -14,7 +14,7 @@ import {
   Zap,
   Bookmark,
 } from "lucide-react";
-import { useEffect, useRef, useState, type CSSProperties, type ElementType, type HTMLAttributes, type ReactNode } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import ResumeForm from "../components/ResumeForm";
 import UploadForm from "../components/UploadForm";
@@ -92,36 +92,30 @@ export default function Home() {
         <div className="absolute inset-x-0 top-0 h-96 bg-[radial-gradient(ellipse_at_top,_rgba(255,255,255,0.16),_transparent_60%)]" />
       </div>
 
-      <div className="relative z-10 mx-auto flex min-h-screen max-w-6xl flex-col px-6 pb-20 pt-10 md:px-10">
+      <div className="relative z-10 mx-auto flex min-h-screen max-w-3xl flex-col px-4 pb-20 pt-10 md:px-6">
         {/* Header */}
-        <header className="relative mb-16">
-          <div className="glass-panel flex items-center justify-between rounded-full border-white/5 bg-white/5 px-6 py-4 backdrop-blur-3xl md:px-8">
-            <div className="relative flex items-center gap-3">
+        <header className="relative mb-12 text-center">
+          <div className="glass-panel inline-flex items-center justify-between w-full rounded-full border-white/5 bg-white/5 px-6 py-4 backdrop-blur-3xl">
+            <div className="flex items-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-500 text-white shadow-inner shadow-white/20">
                 <FileText className="h-5 w-5" />
               </div>
-              <div className="leading-tight">
+              <div className="leading-tight text-left">
                 <p className="text-[0.65rem] uppercase tracking-[0.35em] text-indigo-200">EdgeWorks</p>
                 <p className="text-base font-semibold text-white">Creator Studio</p>
               </div>
             </div>
 
-            <nav className="hidden items-center gap-8 text-sm font-medium text-slate-300 md:flex">
+            <nav className="hidden md:flex gap-6 text-sm font-medium text-slate-300">
               {navLinks.map((item) => (
-                <Link key={item.href} href={item.href} className="relative inline-flex items-center px-3 py-1 transition duration-300 hover:text-white">
-                  <span className="relative z-10">{item.label}</span>
-                  <span className="ring-outline" />
+                <Link key={item.href} href={item.href} className="transition hover:text-white">
+                  {item.label}
                 </Link>
               ))}
             </nav>
 
-            <div className="hidden items-center gap-3 md:flex">
-              <Link href="#workspace" className="btn-secondary">View workspace</Link>
-              <Link href="#workspace" className="btn-primary"><Plus className="h-4 w-4" /> Start new resume</Link>
-            </div>
-
             <button
-              className="relative inline-flex items-center justify-center rounded-full border border-white/10 bg-white/10 p-2 text-slate-200 shadow-inner shadow-white/10 transition hover:bg-white/20 md:hidden"
+              className="md:hidden rounded-full border border-white/10 bg-white/10 p-2 text-slate-200 shadow-inner shadow-white/10 transition hover:bg-white/20"
               onClick={() => setMenuOpen((prev) => !prev)}
               aria-label="Toggle navigation"
             >
@@ -150,131 +144,55 @@ export default function Home() {
           </AnimatePresence>
         </header>
 
-        {/* Hero */}
-        <motion.section id="hero" initial="hidden" animate="visible" variants={fadeUp} className="mb-16 grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="space-y-6">
-            <p className="pill-button w-fit bg-white/10 text-xs uppercase tracking-[0.35em] text-indigo-100">AI resume workspace</p>
-            <h1 className="text-4xl font-semibold leading-tight text-white md:text-5xl">Launch polished resumes in minutes with guided AI drafting</h1>
-            <p className="max-w-xl text-lg text-slate-200">EdgeWorks Creator Studio blends precise prompts with intuitive editing so every application reflects your best wins.</p>
-            <div className="flex flex-col gap-4 sm:flex-row">
-              <Link href="#workspace" className="btn-primary"><Plus className="h-4 w-4" /> Generate a new resume</Link>
-              <Link href="#features" className="btn-secondary">Explore highlights</Link>
-            </div>
+        {/* Chat-like Sections */}
+        <div className="chat-container space-y-6">
+          <div className="chat-bubble system text-center">
+            <h1 className="text-3xl font-semibold text-white mb-2">Welcome to Creator Studio</h1>
+            <p className="text-slate-300">AI-powered resume builder with a chat-like flow.</p>
           </div>
 
-          <motion.div variants={cardFade} className="glass-panel relative overflow-hidden rounded-3xl border-white/5 bg-white/10 p-8">
-            <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-purple-500/5" />
-            <div className="relative space-y-4">
-              <p className="text-sm uppercase tracking-[0.3em] text-indigo-100">Live editor</p>
-              <p className="text-lg text-slate-100">Upload an existing PDF or craft new content — Creator Studio keeps context synced while AI drafts tailored achievements.</p>
-              <div className="rounded-2xl border border-white/10 bg-black/30 p-4 text-sm text-slate-200">“Repositioned onboarding to spotlight measurable growth, accelerating recruiter callbacks by 3x.”</div>
-            </div>
-          </motion.div>
-        </motion.section>
-
-        {/* Stats */}
-        <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={stagger} className="mb-20 grid gap-4 sm:grid-cols-3">
-          {stats.map((stat) => (
-            <motion.div key={stat.label} variants={cardFade} className="floating-card flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-white">
-                <stat.icon className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-300">{stat.label}</p>
-                <p className="text-2xl font-semibold text-white">{stat.value}</p>
-                <p className={`text-sm text-slate-300 ${stat.badgeColor ?? ""}`}>{stat.caption}</p>
-              </div>
-            </motion.div>
-          ))}
-        </motion.section>
-
-        {/* Workspace */}
-        <motion.section id="workspace" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={cardStagger} className="mb-24 space-y-10">
-          <div className="flex flex-col gap-3">
-            <p className="text-xs uppercase tracking-[0.3em] text-indigo-200">Workspace</p>
-            <h2 className="text-3xl font-semibold text-white md:text-4xl">Build, remix, and export in one flow</h2>
-            <p className="max-w-2xl text-slate-200">Parse an existing resume for quick tweaks or draft a brand-new version using guided prompts. Download ready-to-send PDFs in a click.</p>
+          <div className="chat-bubble assistant">
+            <h2 className="text-xl font-semibold mb-2">Import an Existing Resume</h2>
+            <UploadForm onParsed={setParsedText} />
           </div>
 
-          <div className="grid gap-8 lg:grid-cols-2">
-            <motion.div variants={cardFade} className="floating-card">
-              <h3 className="text-xl font-semibold text-white">Import an existing resume</h3>
-              <p className="mt-2 text-sm text-slate-300">We’ll scan the PDF, pull out clean text, and prep it for editing.</p>
-              <div className="mt-6"><UploadForm onParsed={setParsedText} /></div>
-              {parsedText && (
-                <div className="mt-6 rounded-2xl border border-white/10 bg-black/30 p-5 text-sm text-slate-200">
-                  <p className="mb-2 font-semibold text-white">Quick extract</p>
-                  <p className="whitespace-pre-wrap text-slate-200/90">{parsedText.slice(0, 500)}{parsedText.length > 500 ? "…" : ""}</p>
-                </div>
-              )}
-            </motion.div>
+          {parsedText && (
+            <div className="chat-bubble assistant">
+              <h2 className="text-lg font-semibold">Quick Extract</h2>
+              <p className="whitespace-pre-wrap text-slate-200">{parsedText.slice(0, 500)}{parsedText.length > 500 ? "…" : ""}</p>
+            </div>
+          )}
 
-            <motion.div variants={cardFade} className="floating-card">
-              <h3 className="text-xl font-semibold text-white">Draft a fresh version</h3>
-              <p className="mt-2 text-sm text-slate-300">Share your highlights and we’ll compile a polished PDF using our Gemini-backed renderer.</p>
-              <div className="mt-6"><ResumeForm /></div>
-            </motion.div>
+          <div className="chat-bubble user">
+            <h2 className="text-xl font-semibold mb-2">Draft a Fresh Version</h2>
+            <ResumeForm />
           </div>
 
           {parsedHtml && (
-            <motion.div variants={cardFade} className="floating-card border border-white/10 bg-white/5">
-              <h3 className="text-xl font-semibold text-white">Parsed preview</h3>
-              <p className="mt-2 text-sm text-slate-300">Cleaned HTML ready for remixing in the AI writer.</p>
+            <div className="chat-bubble assistant">
+              <h2 className="text-lg font-semibold">Parsed Preview</h2>
               <TemplatePreview html={parsedHtml} />
-            </motion.div>
+            </div>
           )}
-        </motion.section>
 
-        {/* Features */}
-        <motion.section id="features" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={stagger} className="mb-24">
-          <div className="mb-10 space-y-3">
-            <p className="text-xs uppercase tracking-[0.3em] text-indigo-200">Highlights</p>
-            <h2 className="text-3xl font-semibold text-white md:text-4xl">Why creators pick EdgeWorks</h2>
-            <p className="max-w-3xl text-slate-200">Powerful automations remove the busywork so you can focus on curating stories that convert interviews.</p>
-          </div>
+          {features.map((feature) => (
+            <div key={feature.title} className="chat-bubble assistant">
+              <h3 className="font-semibold">{feature.title}</h3>
+              <p className="text-slate-300">{feature.description}</p>
+            </div>
+          ))}
 
-          <div className="grid gap-6 md:grid-cols-3">
-            {features.map((feature) => (
-              <motion.div key={feature.title} variants={cardFade} className="floating-card space-y-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-white">
-                  <feature.icon className="h-5 w-5" />
-                </div>
-                <h3 className="text-xl font-semibold text-white">{feature.title}</h3>
-                <p className="text-sm text-slate-300">{feature.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
-
-        {/* Timeline */}
-        <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={stagger} className="mb-24">
-          <div className="mb-8 space-y-3">
-            <p className="text-xs uppercase tracking-[0.3em] text-indigo-200">Workflow</p>
-            <h2 className="text-3xl font-semibold text-white md:text-4xl">From upload to share-ready in three steps</h2>
-          </div>
-
-          <div className="space-y-6">
-            {timeline.map((step, index) => (
-              <motion.div key={step.title} variants={cardFade} className="floating-card flex flex-col gap-3 md:flex-row md:items-center">
-                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-white/10 text-lg font-semibold text-white">{index + 1}</div>
-                <div>
-                  <h3 className="text-xl font-semibold text-white">{step.title}</h3>
-                  <p className="text-sm text-slate-300">{step.description}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
+          {timeline.map((step, i) => (
+            <div key={step.title} className="chat-bubble user">
+              <h3 className="font-semibold">{i + 1}. {step.title}</h3>
+              <p className="text-slate-300">{step.description}</p>
+            </div>
+          ))}
+        </div>
 
         {/* Footer */}
-        <footer className="mt-auto border-t border-white/10 pt-10 text-sm text-slate-400">
-          <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-            <p>© {new Date().getFullYear()} EdgeWorks Creator Studio. All rights reserved.</p>
-            <div className="flex items-center gap-6">
-              <Link href="#hero" className="transition hover:text-white">Back to top</Link>
-              <Link href="mailto:hello@edgeworks.ai" className="transition hover:text-white">Contact support</Link>
-            </div>
-          </div>
+        <footer className="mt-12 border-t border-white/10 pt-8 text-center text-sm text-slate-400">
+          <p>© {new Date().getFullYear()} EdgeWorks Creator Studio. All rights reserved.</p>
         </footer>
       </div>
     </main>
