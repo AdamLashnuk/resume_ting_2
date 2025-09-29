@@ -24,7 +24,7 @@ import {
   type ElementType,
   type HTMLAttributes,
   type ReactNode,
-  type MouseEvent;
+  type MouseEvent
 } from "react";
 
 import ResumeForm from "../components/ResumeForm";
